@@ -9,15 +9,12 @@
 
 TEST(volochaev_s_count_characters_27_mpi, test_pipeline_run) {
   boost::mpi::communicator world;
-  std::vector<std::string> global_vec;
+  std::vector<std::string> global_vec(2, std::string(200000, ' '));
   std::vector<int32_t> global_sum(1, 0);
   // Create TaskData
   std::shared_ptr<ppc::core::TaskData> taskDataPar = std::make_shared<ppc::core::TaskData>();
   int count_size_string;
   if (world.rank() == 0) {
-    count_size_string = 200000000;
-    std::string s(count_size_string, ' ');
-    global_vec = std::vector<std::string>(2, s);
 
     taskDataPar->inputs.emplace_back(reinterpret_cast<uint8_t*>(global_vec.data()));
     taskDataPar->inputs_count.emplace_back(global_vec.size());
@@ -51,15 +48,12 @@ TEST(volochaev_s_count_characters_27_mpi, test_pipeline_run) {
 
 TEST(volochaev_s_count_characters_27_mpi, test_task_run) {
   boost::mpi::communicator world;
-  std::vector<std::string> global_vec;
+  std::vector<std::string> global_vec(2, std::string(200000, ' '));
   std::vector<int32_t> global_sum(1, 0);
   // Create TaskData
   std::shared_ptr<ppc::core::TaskData> taskDataPar = std::make_shared<ppc::core::TaskData>();
   int string_size;
   if (world.rank() == 0) {
-    string_size = 200000000;
-    std::string s(string_size, ' ');
-    global_vec = std::vector<std::string>(2, s);
     taskDataPar->inputs.emplace_back(reinterpret_cast<uint8_t*>(global_vec.data()));
     taskDataPar->inputs_count.emplace_back(global_vec.size());
     taskDataPar->outputs.emplace_back(reinterpret_cast<uint8_t*>(global_sum.data()));
